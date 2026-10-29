@@ -1,0 +1,200 @@
+% The paper.  To retarget it, change the style option below (or build with
+% `make STYLE=<style>`).  See README.md for the full interface.
+\documentclass[
+  lncs,         % lncs | sigconf | sigplan | acmsmall | acmlarge | acmtog
+                % | manuscript | ieee | lipics | article
+  % anonymous,  % double-blind: hide authors, funding and acknowledgments
+  % review,     % number the lines
+  % final,      % hide \todo and other notes
+]{venue}
+
+% ---- Packages ---------------------------------------------------------------
+% venue.cls already loads amsmath, graphicx, xcolor, hyperref and natbib, and
+% defines the usual theorem environments.
+\usepackage{booktabs}            % \toprule, \midrule, \bottomrule in tables
+\input{lib/coq-listings}         % \begin{lstlisting}[language=Coq]
+% \usepackage{algorithm}
+% \usepackage[noend]{algpseudocode}
+% \usepackage{tikz}
+\usepackage[capitalise]{cleveref} % \cref{...}; keep this last
+
+% ---- Macros -----------------------------------------------------------------
+% Inline notes for co-authors; all of them vanish with the `final' option.
+\newnote{\first}{First}{blue}
+
+% ---- Front matter -----------------------------------------------------------
+% Written once; venue.cls turns it into each publisher's own commands.
+\title[Abbreviated Title for Running Heads]{Contribution Title}
+
+\addaffiliation{ku}{
+  department  = Institute for Information Sciences,
+  institution = The University of Kansas,
+  city        = Lawrence,
+  state       = KS,
+  postcode    = 66045,
+  country     = USA,
+}
+\addaffiliation{other}{
+  institution = Another University,
+  city        = Heidelberg,
+  country     = Germany,
+}
+
+\addauthor{First Author}{
+  affiliation = ku,
+  email       = first.author@ku.edu,
+  orcid       = 0000-0000-0000-0000,
+}
+\addauthor{Second Author}{
+  affiliation = {ku, other},
+  email       = second.author@ku.edu,
+}
+\addauthor{Third Author}{
+  affiliation = other,
+  email       = third@another.edu,
+}
+\authorrunning{F. Author et al.}  % abbreviated author list for running heads
+
+\keywords{First keyword, Second keyword, Another keyword}
+\funding{Supported by organization X.}
+
+% ACM CCS concepts, used by the ACM styles and LIPIcs (https://dl.acm.org/ccs).
+\ccsdesc[500]{Theory of computation~Logic and verification}
+\ccsdesc[300]{Software and its engineering~Formal software verification}
+
+% Metadata that only one publisher wants.
+\IfStyleT{acm}{%
+  % Replace with the rights-management block ACM sends after acceptance.
+  \setcopyright{none}
+  \acmConference[Conf '26]{Conference Name}{Month Day--Day, 2026}{City, Country}
+  \acmYear{2026}
+}
+\IfStyleT{lipics}{%
+  \hideLIPIcs  % remove for the camera-ready version
+}
+
+\begin{document}
+
+% The abstract goes *before* \maketitle (acmart needs it there; for the other
+% styles it is moved below the title automatically).
+\begin{abstract}
+  The abstract should briefly summarize the contents of the paper in
+  150--250 words.
+\end{abstract}
+
+\maketitle
+
+\section{Introduction}
+\label{sec:intro}
+
+This template builds the same source for several publishers.  Change the
+style option of \verb|\documentclass| and rebuild; nothing else needs to
+change.  \Cref{sec:samples} shows the common elements of a paper.
+
+\section{Sample Elements}
+\label{sec:samples}
+
+\subsection{Headings and Text}
+
+The first paragraph of a section or subsection is not indented.  Subsequent
+paragraphs are.\todo{Remove the sample text.}
+
+\subsubsection{Third-Level Heading}
+Lower-level headings are formatted as run-in headings in some styles.
+\first{A note from the first author, also hidden by \texttt{final}.}
+
+\subsection{Tables, Equations and Figures}
+
+\Cref{tab:sizes} uses \texttt{booktabs}: no vertical rules and only three
+horizontal ones.  Table captions go above the table.
+
+\begin{table}[tbp]
+  \caption{A sample table.}
+  \label{tab:sizes}
+  \centering
+  \begin{tabular}{@{}lr@{}}
+    \toprule
+    Component        & Lines of code \\
+    \midrule
+    Specification    & 1\,200 \\
+    Proofs           & 8\,700 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+Displayed equations are centered and numbered, as in \cref{eq:sum}:
+\begin{equation}
+  \label{eq:sum}
+  \sum_{i=1}^{n} i = \frac{n(n+1)}{2}.
+\end{equation}
+
+Figure captions go below the figure (\cref{fig:example}).  Prefer vector
+graphics (PDF) to raster images.
+
+\begin{figure}[tbp]
+  \centering
+  \includegraphics[width=0.6\linewidth]{example-image}
+  \Description{A gray placeholder image.}  % alt text, for screen readers
+  \caption{A sample figure.}
+  \label{fig:example}
+\end{figure}
+
+\subsection{Theorems and Proofs}
+
+The environments \texttt{theorem}, \texttt{lemma}, \texttt{corollary},
+\texttt{proposition}, \texttt{conjecture}, \texttt{definition},
+\texttt{example}, \texttt{remark} and \texttt{proof} exist in every style.
+
+\begin{definition}[Successor]
+  \label{def:succ}
+  The successor of a natural number $n$ is $n + 1$.
+\end{definition}
+
+\begin{theorem}
+  \label{thm:succ}
+  Every natural number has a successor.
+\end{theorem}
+
+\begin{proof}
+  Immediate from \cref{def:succ}.
+\end{proof}
+
+\subsection{Code}
+
+\begin{lstlisting}[language=Coq]
+Fixpoint fact (n : nat) : nat :=
+  match n with
+  | 0 => 1
+  | S m => n * fact m
+  end.
+\end{lstlisting}
+
+\subsection{Citations}
+
+Cite with \verb|\cite| for a numbered citation~\cite{hoare1969axiomatic},
+\verb|\citet| for a textual one, as in ``\citet{coquand1988calculus}
+introduced the calculus of constructions'', and several at
+once~\cite{knuth1984texbook,lamport1994latex,bertot2004coqart,demoura2008z3}.
+
+\section{Conclusion}
+
+Hiding identifying text for double-blind review: this work extends
+\anon{our earlier tool}~\cite{leroy2006compcert}.
+
+\begin{acks}
+  We thank the anonymous reviewers for their comments.
+\end{acks}
+
+\IfStyleT{lncs}{%
+  % Springer requires this section; it is not hidden by `anonymous'.
+  \begin{credits}
+    \subsubsection{\discintname}
+    The authors have no competing interests to declare that are relevant to
+    the content of this article.
+  \end{credits}}
+
+% venue.cls picks the publisher's BibTeX style.  To also use the shared lab
+% bibliography, run `make bib` and change this to {references,bib/sldg}.
+\bibliography{references}
+
+\end{document}

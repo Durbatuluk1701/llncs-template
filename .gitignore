@@ -1,5 +1,6 @@
-## Generated PDF
-samplepaper.pdf
+# Main PDF Ignoring
+main.pdf
+main-*.pdf
 
 ## Core latex/pdflatex auxiliary files:
 *.aux
@@ -144,6 +145,9 @@ acs-*.bib
 
 # listings
 *.lol
+
+# LIPIcs
+*.vtc
 
 # luatexja-ruby
 *.ltjruby
